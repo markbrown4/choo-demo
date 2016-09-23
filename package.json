@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "example-1": "budo ./1-hello-choo.js -p 8080 --open -- -t es2020",
-    "example-2": "budo ./2-state-changes.js -p 8080 --open -- -t es2020"
+    "example-2": "budo ./2-state-changes.js -p 8080 --open -- -t es2020",
+    "example-3": "budo ./3-component-tree.js -p 8080 --open -- -t es2020"
   },
   "keywords": [],
   "author": "",
