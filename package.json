@@ -8,14 +8,15 @@
     "example-2": "budo ./2-state-changes.js -p 8080 --open -- -t es2020",
     "example-3": "budo ./3-component-tree.js -p 8080 --open -- -t es2020",
     "example-4": "budo ./4-effects.js -p 8080 --open -- -t es2020",
-    "example-5": "budo ./5-subscriptions.js -p 8080 --open -- -t es2020"
+    "example-5": "budo ./5-subscriptions.js -p 8080 --open -- -t es2020",
+    "example-6": "budo ./6-routes.js -p 8080 --pushstate true --base / --open -- -t es2020"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "budo": "^9.2.0",
-    "choo": "^3.2.2",
+    "choo": "^3.3.0",
     "es2020": "^1.1.9"
   }
 }
