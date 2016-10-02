@@ -33,10 +33,9 @@ const timeView = (state, prev, send) => html`
   <p>${state.time}</p>
 `
 
-let mounted = false;
+let memoizedEl = null
 const dataVizBiz = (state, prev, send) => {
-  function load(el) {
-    mounted = true;
+  function enter(el) {
     d3.select(el)
       .selectAll('div')
       .data(state.data)
@@ -52,22 +51,28 @@ const dataVizBiz = (state, prev, send) => {
       .style('background', 'deepskyblue')
   }
 
-  function update(el) {
+  function update() {
     d3.selectAll('.bar')
       .data(state.data)
       .style('height', (d)=> d + 'px')
   }
 
-  if (mounted) {
-    update(component)
+  function unload() {
+    memoizedEl = null
   }
 
-  let component = html`
-    <div onload=${load} style="height: 51px; line-height: 51px"></div>
-  `
-  component.isSameNode = () => true
+  if (!memoizedEl) {
+    memoizedEl = html`
+      <div onload=${enter} onunload=${unload} style="height: 51px; line-height: 51px"></div>
+    `
+    return memoizedEl
+  } else {
+    update()
 
-  return component;
+    const placeholder = html`<template></template>`
+    placeholder.isSameNode = (el) => el.isSameNode(memoizedEl)
+    return placeholder
+  }
 }
 
 const myView = (state, prev, send) => html`
