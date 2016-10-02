@@ -58,14 +58,14 @@ const dataVizBiz = (state, prev, send) => {
       .style('height', (d)=> d + 'px')
   }
 
+  if (mounted) {
+    update(component)
+  }
+
   let component = html`
     <div onload=${load} style="height: 51px; line-height: 51px"></div>
   `
   component.isSameNode = () => true
-
-  if (mounted) {
-    update(component)
-  }
 
   return component;
 }
