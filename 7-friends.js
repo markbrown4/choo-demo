@@ -38,13 +38,11 @@ const dataVizBiz = (state, prev, send) => {
       .style('margin', '0 2px')
       .style('background', 'deepskyblue')
   }
-
-  return html`
-    <div>
-      <div onload=${load}></div>
-      ${timeView(state, prev, send)}
-    </div>
+  let component = html`
+    <div onload=${load}></div>
   `
+  component.isSameNode = (el) => true
+  return component;
 }
 
 const myView = (state, prev, send) => html`
@@ -52,6 +50,7 @@ const myView = (state, prev, send) => html`
     <h1>Sharing is caring</h1>
     ${timeView(state, prev, send)}
     ${dataVizBiz(state, prev, send)}
+    ${timeView(state, prev, send)}
   </div>
 `
 

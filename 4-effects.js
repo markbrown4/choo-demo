@@ -23,8 +23,7 @@ app.model({
 const itemView = (item) => html`<li>${item.name}</li>`
 
 const myView = (state, prev, send) => html`
-  <div>
-    <button onclick=${() => send('fetchItems')}>Go get em</button>
+  <div onload=${() => send('fetchItems')}>
     <ul>
       ${state.items.map(item => itemView(item))}
     </ul>
