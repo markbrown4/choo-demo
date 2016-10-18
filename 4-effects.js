@@ -10,9 +10,9 @@ app.model({
   effects: {
     fetchItems: (data, state, send, done) => {
       send('updateItems', [], done)
-      http('/api/items.json', {json: true}, (err, res, body) => {
-        send('updateItems', body.items, done)
-      })
+      fetch('/api/items.json')
+        .then(resp => resp.json())
+        .then(body => send('updateItems', body.items, done))
     }
   },
   reducers: {
