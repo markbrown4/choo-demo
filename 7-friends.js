@@ -1,5 +1,6 @@
 const choo = require('choo')
 const html = require('choo/html')
+const widget = require('cache-element/widget')
 const d3 = require('d3')
 const app = choo()
 
@@ -33,13 +34,22 @@ const timeView = (state, prev, send) => html`
   <p>${state.time}</p>
 `
 
-let memoizedEl = null
-const dataVizBiz = (state, prev, send) => {
-  function enter(el) {
-    d3.select(el)
-      .selectAll('div')
+const dataViz = widget(update => {
+  update(onUpdate)
+
+  const el = html`
+    <div style="height: 51px; line-height: 51px"></div>
+  `
+  return el;
+
+  function onUpdate(state) {
+    const bars = d3.select(el)
+      .selectAll('div.bar')
       .data(state.data)
-      .enter()
+
+    bars.style('height', (d)=> d + 'px')
+
+    bars.enter()
       .append('div')
       .attr('class', 'bar')
       .style('transition', '.5s')
@@ -51,35 +61,15 @@ const dataVizBiz = (state, prev, send) => {
       .style('background', 'deepskyblue')
   }
 
-  function update() {
-    d3.selectAll('.bar')
-      .data(state.data)
-      .style('height', (d)=> d + 'px')
-  }
+})
 
-  function unload() {
-    memoizedEl = null
-  }
-
-  if (!memoizedEl) {
-    memoizedEl = html`
-      <div onload=${enter} onunload=${unload} style="height: 51px; line-height: 51px"></div>
-    `
-    return memoizedEl
-  } else {
-    update()
-
-    const placeholder = html`<template></template>`
-    placeholder.isSameNode = (el) => el.isSameNode(memoizedEl)
-    return placeholder
-  }
-}
+const dataVizView = (state, prev, send) => dataViz(state)
 
 const myView = (state, prev, send) => html`
   <div>
     <h1>Sharing is caring</h1>
     ${timeView(state, prev, send)}
-    <div>${dataVizBiz(state, prev, send)}</div>
+    <div>${dataVizView(state, prev, send)}</div>
     ${timeView(state, prev, send)}
   </div>
 `

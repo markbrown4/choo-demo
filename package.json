@@ -17,6 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "budo": "^9.2.0",
+    "cache-element": "^1.1.1",
     "choo": "^3.3.0",
     "d3": "^4.2.6",
     "es2020": "^1.1.9"
